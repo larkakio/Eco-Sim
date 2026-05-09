@@ -3,7 +3,21 @@ import { base, mainnet } from "wagmi/chains";
 import { injected, baseAccount, walletConnect } from "wagmi/connectors";
 import { getWalletConnectProjectId } from "@/lib/env/public";
 
+const DEFAULT_SITE_URL = "https://eco-sim-peach.vercel.app";
+
 const projectId = getWalletConnectProjectId();
+
+function walletConnectSiteUrl(): string {
+  const u =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "") ||
+    DEFAULT_SITE_URL;
+  return u.startsWith("http") ? u : `https://${u}`;
+}
+
+function walletConnectIcons(): string[] {
+  const base = walletConnectSiteUrl();
+  return [`${base}/app-icon.jpg`];
+}
 
 export const config = createConfig({
   chains: [base, mainnet],
@@ -18,8 +32,8 @@ export const config = createConfig({
             metadata: {
               name: "Eco Sim",
               description: "Eco Sim — cyberpunk ecology puzzle on Base",
-              url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://localhost",
-              icons: [],
+              url: walletConnectSiteUrl(),
+              icons: walletConnectIcons(),
             },
           }),
         ]

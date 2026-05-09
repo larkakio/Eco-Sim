@@ -1,5 +1,7 @@
 export function getBaseAppId(): string {
-  return process.env.NEXT_PUBLIC_BASE_APP_ID ?? "pending-registration";
+  return (
+    process.env.NEXT_PUBLIC_BASE_APP_ID ?? "69feeaa8de2c01f9557d2deb"
+  );
 }
 
 export function getBuilderCode(): string | null {
