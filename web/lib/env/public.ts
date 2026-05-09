@@ -4,9 +4,15 @@ export function getBaseAppId(): string {
   );
 }
 
+/**
+ * Canonical registry Builder Code from Base.dev (e.g. `bc_nrlqeyi6`).
+ * @see https://docs.base.org/base-chain/builder-codes/builder-codes
+ */
 export function getBuilderCode(): string | null {
-  const c = process.env.NEXT_PUBLIC_BUILDER_CODE;
-  return c && c.length > 0 ? c : null;
+  const raw = process.env.NEXT_PUBLIC_BUILDER_CODE?.trim() ?? "";
+  if (!raw || raw === "bc_your_builder_code") return null;
+  if (!/^bc_[a-zA-Z0-9_-]+$/.test(raw)) return null;
+  return raw;
 }
 
 export function getBuilderCodeSuffixHex(): `0x${string}` | null {
