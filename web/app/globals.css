@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+:root {
+  --void: #05030c;
+  --neon-cyan: #22d3ee;
+  --neon-fuchsia: #e879f9;
+}
+
+@theme inline {
+  --font-sans: var(--font-share-tech), ui-monospace, monospace;
+  --font-mono: var(--font-share-tech), ui-monospace, monospace;
+  --font-orbitron: var(--font-orbitron), var(--font-share-tech), sans-serif;
+}
+
+@layer base {
+  html {
+    overflow-x: hidden;
+  }
+  body {
+    background-color: var(--void);
+    color: #e0f7ff;
+    font-family: var(--font-share-tech), ui-monospace, monospace;
+  }
+}
+
+@keyframes cyber-dim {
+  0% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes neon-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 0 36px rgba(52, 211, 153, 0.65),
+      0 0 4px rgba(34, 211, 238, 0.9);
+  }
+}
+
+@keyframes neon-flash {
+  0%,
+  90%,
+  100% {
+    filter: brightness(1);
+  }
+  92% {
+    filter: brightness(1.25);
+  }
+}
+
+@keyframes hex-drift {
+  0% {
+    transform: rotate(0deg) scale(1.02);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.02);
+  }
+}
+
+@layer utilities {
+  .animate-cyber-dim {
+    animation: cyber-dim 3.2s ease-in-out infinite;
+  }
+  .animate-neon-pulse {
+    animation: neon-pulse 2.4s ease-in-out infinite;
+  }
+  .animate-neon-flash {
+    animation: neon-flash 4s ease-in-out infinite;
+  }
+  .animate-hex-drift {
+    animation: hex-drift 120s linear infinite;
+  }
+  .font-orbitron {
+    font-family: var(--font-orbitron), var(--font-share-tech), sans-serif;
+  }
+  .neon-tile-life {
+    animation: neon-pulse 2.8s ease-in-out infinite;
+  }
+  .neon-tile-tox {
+    animation: cyber-dim 1.6s ease-in-out infinite;
+  }
+  .neon-tile-ion {
+    animation: neon-flash 3.5s ease-in-out infinite;
+  }
+}
+
+.cyber-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(34, 211, 238, 0.12), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(232, 121, 249, 0.08), transparent),
+    var(--void);
+  overflow: hidden;
+}
+
+.cyber-bg::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 121, 249, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  transform: perspective(400px) rotateX(12deg);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 75%);
+  animation: hex-drift 180s linear infinite;
+  pointer-events: none;
+}
+
+.cyber-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  opacity: 0.35;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.neon-panel {
+  backdrop-filter: blur(8px);
+}
